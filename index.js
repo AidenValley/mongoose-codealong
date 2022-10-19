@@ -146,10 +146,10 @@ app.delete('/users/:email', (req, res) => {
     });
 });
 
-app.get('/posts/:email', (req, res) => {
-    console.log('find posts by', req.params.id)
+app.get('/posts/:title', (req, res) => {
+    console.log('find posts by', req.params.title)
     Post.findOne({
-        id: req.params.id
+        title: req.params.title
     })
     .then(post => {
         console.log('Here is the post', post.title);
@@ -177,7 +177,7 @@ app.post('/posts', (req, res) => {
     });
 });
 
-app.put('/posts/:email', (req, res) => {
+app.put('/posts/:title', (req, res) => {
     console.log('route is being on PUT')
     Post.findOne({ body: req.params.body })
         .then(foundPost => {
@@ -202,7 +202,7 @@ app.put('/posts/:email', (req, res) => {
         })
 });
 
-app.delete('/posts/:email', (req, res) => {
+app.delete('/posts/:title', (req, res) => {
     Post.findOneAndRemove({ body: req.params.body })
     .then(response => {
         console.log('This was delete', response);
@@ -227,7 +227,7 @@ app.get('/comments', (req, res) => {
     });
 });
 
-app.get('/comments/:email', (req, res) => {
+app.get('/comments/:header', (req, res) => {
     console.log('find comments by', req.params.header)
     Comment.findOne({
         header: req.params.header
@@ -257,9 +257,9 @@ app.post('/comments', (req, res) => {
     });
 });
 
-app.put('/comments/:email', (req, res) => {
+app.put('/comments/:header', (req, res) => {
     console.log('route is being on PUT')
-    Post.findOne({ content: req.params.content })
+    Post.findOne({ header: req.params.header })
         .then(foundComment => {
             console.log('Post found', foundComment);
             Post.findOneAndUpdate({ content: req.params.content },
@@ -282,8 +282,8 @@ app.put('/comments/:email', (req, res) => {
         })
 });
 
-app.delete('/comments/:email', (req, res) => {
-    Comment.findOneAndRemove({ content: req.params.content })
+app.delete('/comments/:header', (req, res) => {
+    Comment.findOneAndRemove({ header: req.params.header })
     .then(response => {
         console.log('This was delete', response);
         res.json({ message: `${req.params.content} was deleted`});
